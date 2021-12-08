@@ -5,11 +5,11 @@ open System.Xml.Serialization
 open MercuryLibrary
 open MercuryLibrary.Models
 
-let log (message: string) =
+let log (message: string) : unit =
     let timestamp = DateTime.Now.ToString("hh:mm:ss.fff")
     printfn $"{timestamp}: {message}"
 
-let getWhoisResponse (apiUrlFormat: string) (domain: string) =
+let getWhoisResponse (apiUrlFormat: string) (domain: string) : Async<WhoisResponse option> =
     InputValidation.whoisInputValidation apiUrlFormat domain
 
     let apiUrl = String.Format(apiUrlFormat, domain)
@@ -42,7 +42,7 @@ let getWhoisResponse (apiUrlFormat: string) (domain: string) =
     }
 
 [<EntryPoint>]
-let main argv =
+let main argv : int =
     log "function is starting..."
 
     let apiUrlFormat = argv.[0]
