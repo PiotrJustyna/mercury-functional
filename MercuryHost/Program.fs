@@ -22,6 +22,10 @@ let getWhoisResponse (apiUrlFormat: string) (domain: string) : Async<WhoisRespon
     let client = new HttpClient()
 
     async {
+        // call GetAsync
+        // translate Task to Async
+        // execute the asynchronous expression
+        // bind its result to apiResponse
         let! apiResponse =
             client.GetAsync(apiUrl, cancellationToken)
             |> Async.AwaitTask
@@ -29,10 +33,16 @@ let getWhoisResponse (apiUrlFormat: string) (domain: string) : Async<WhoisRespon
         if apiResponse.IsSuccessStatusCode then
             let serializer = XmlSerializer(typeof<WhoisRecord>)
 
+            // call ReadAsStreamAsync
+            // translate Task to Async
+            // execute the asynchronous expression
+            // bind its result to stream
             let! stream =
                 apiResponse.Content.ReadAsStreamAsync(cancellationToken)
                 |> Async.AwaitTask
 
+            // deserialize stream to obj
+            // downcast to WhoisRecord
             let whoisRecord =
                 serializer.Deserialize(stream) :?> WhoisRecord
 
